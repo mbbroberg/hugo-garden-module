@@ -3,6 +3,18 @@
   extended = false
   min = "0.112.0"
 
+[[module.mounts]]
+  source = "layouts"
+  target = "layouts"
+  
+[[module.mounts]]
+  source = "assets"
+  target = "assets"
+  
+[[module.mounts]]
+  source = "archetypes"
+  target = "archetypes"
+
 [params.garden]
   # Growth stage names (in order from least to most mature)
   growthStages = ["seed", "sprout", "rhizome"]
