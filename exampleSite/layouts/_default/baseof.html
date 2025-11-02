@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
+    {{ $style := resources.Get "css/style.css" }}
+    {{ if $style }}
+        {{ $style = $style | minify }}
+        <link rel="stylesheet" href="{{ $style.RelPermalink }}">
+    {{ end }}
+</head>
+<body>
+    <main>
+        {{ block "main" . }}{{ end }}
+    </main>
+</body>
+</html>
+

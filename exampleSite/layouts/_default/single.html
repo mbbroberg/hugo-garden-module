@@ -1,0 +1,33 @@
+{{ define "main" }}
+<article class="post">
+  {{ if eq .Type "garden" }}
+    {{ partial "garden-state-indicator.html" . }}
+  {{ end }}
+
+  <header class="post-header">
+    <h1 class="post-title">{{ .Title }}</h1>
+    {{ if ne .Type "garden" }}
+      <time datetime="{{ .Date.Format "2006-01-02" }}" class="post-date">
+        {{ .Date.Format "January 2, 2006" }}
+      </time>
+    {{ end }}
+  </header>
+
+  <div class="post-content">
+    {{ .Content }}
+  </div>
+
+  {{ if eq .Type "garden" }}
+    {{ partial "garden-callout.html" . }}
+  {{ end }}
+</article>
+
+{{ if eq .Type "garden" }}
+  {{ $gardenCSS := resources.Get "css/garden.css" }}
+  {{ if $gardenCSS }}
+    {{ $gardenCSS = $gardenCSS | minify }}
+    <link rel="stylesheet" href="{{ $gardenCSS.RelPermalink }}">
+  {{ end }}
+{{ end }}
+{{ end }}
+

@@ -1,0 +1,47 @@
+{{ define "main" }}
+<div class="home-content">
+    <h1>{{ .Site.Title }}</h1>
+    <p class="lead">A demonstration of the Hugo Garden Module.</p>
+    <p>This example site showcases all the features of the digital garden module. Visit the <a href="/garden/">Digital Garden</a> to explore growing ideas and interconnected thoughts.</p>
+    <div class="features">
+        <h2>What's Included</h2>
+        <ul>
+            <li>🌱 Growth stage organization (seed, sprout, rhizome)</li>
+            <li>🏷️ Tag-based browsing and discovery</li>
+            <li>📊 Visual entry counts and indicators</li>
+            <li>🔄 Timestamp tracking (planted & tended)</li>
+            <li>🎨 Fully customizable colors and styles</li>
+        </ul>
+    </div>
+</div>
+<style>
+.lead {
+    font-size: 1.25rem;
+    color: #64748b;
+    margin: 0.5rem 0 1.5rem;
+}
+
+.features {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.features h2 {
+    margin-top: 0;
+}
+
+.features ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.features li {
+    padding: 0.5rem 0;
+    font-size: 1.1rem;
+}
+</style>
+{{ end }}
+

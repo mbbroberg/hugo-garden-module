@@ -1,0 +1,26 @@
+{{- $gardenConfig := .Site.Params.garden | default dict -}}
+{{- $emojis := $gardenConfig.emojis | default (dict "seed" "🌱" "sprout" "🌿" "rhizome" "🫚") -}}
+{{- $labels := $gardenConfig.labels | default (dict "seed" "seed" "sprout" "sprout" "rhizome" "rhizome") -}}
+{{- $state := .Params.state | default "seed" -}}
+{{- $showPlanted := $gardenConfig.showPlantedDate | default true -}}
+{{- $showTended := $gardenConfig.showLastTended | default true -}}
+
+<div class="garden-state-indicator">
+  <span class="state-icon {{ $state }}" title="{{ index $labels $state | title }}">
+    {{ index $emojis $state }}
+  </span>
+  <span class="state-label">{{ index $labels $state }}</span>
+  <span class="state-dates">
+    {{ if $showPlanted }}
+    <time class="planted">Planted: {{ .Date.Format "January 2, 2006" }}</time>
+    {{ end }}
+    {{ if and $showTended .Params.updated }}
+      {{ $dateStr := .Params.updated }}
+      {{ $dateParts := split $dateStr " " }}
+      {{ if ge (len $dateParts) 2 }}
+        {{ $justDate := index $dateParts 0 }}
+        <time class="tended">Last tended: {{ dateFormat "January 2, 2006" $justDate }}</time>
+      {{ end }}
+    {{ end }}
+  </span>
+</div>

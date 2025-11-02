@@ -1,0 +1,32 @@
+[module]
+[module.hugoVersion]
+  extended = false
+  min = "0.112.0"
+
+[params.garden]
+  # Growth stage names (in order from least to most mature)
+  growthStages = ["seed", "sprout", "rhizome"]
+
+  # Colors for each growth stage
+  [params.garden.colors]
+    seed = "rgba(145, 219, 105, 1)"
+    sprout = "rgba(72, 187, 120, 1)"
+    rhizome = "rgba(47, 133, 90, 1)"
+
+  # Emojis for each growth stage
+  [params.garden.emojis]
+    seed = "🌱"
+    sprout = "🌿"
+    rhizome = "🫚"
+
+  # Labels for each growth stage
+  [params.garden.labels]
+    seed = "seed"
+    sprout = "sprout"
+    rhizome = "rhizome"
+
+  # Garden section settings
+  sectionTitle = "🌱 Digital Garden"
+  showLastTended = true
+  showPlantedDate = true
+  enableDataviewStyler = true

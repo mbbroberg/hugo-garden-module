@@ -1,0 +1,48 @@
+baseURL = "https://example.com/"
+languageCode = "en-us"
+title = "Digital Garden Example"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[taxonomies]
+  tag = "tags"
+  state = "state"
+
+[module]
+  [[module.imports]]
+    path = "github.com/mbbroberg/hugo-garden-module"
+
+[params.garden]
+  # Customize your garden settings here
+  sectionTitle = "🌱 My Digital Garden"
+  showLastTended = true
+  showPlantedDate = true
+  enableDataviewStyler = true
+
+  # Optional: Customize callout text
+  calloutText = "This is an entry in my digital garden."
+  calloutLinkText = "See what else is growing here."
+
+  # Growth stages (in order from least to most mature)
+  growthStages = ["seed", "sprout", "rhizome"]
+
+  # Colors for each growth stage
+  [params.garden.colors]
+    seed = "rgba(145, 219, 105, 1)"
+    sprout = "rgba(72, 187, 120, 1)"
+    rhizome = "rgba(47, 133, 90, 1)"
+
+  # Emojis for each growth stage
+  [params.garden.emojis]
+    seed = "🌱"
+    sprout = "🌿"
+    rhizome = "🫚"
+
+  # Labels for each growth stage
+  [params.garden.labels]
+    seed = "seed"
+    sprout = "sprout"
+    rhizome = "rhizome"

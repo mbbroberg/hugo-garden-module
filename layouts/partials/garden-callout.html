@@ -1,0 +1,13 @@
+{{- $gardenConfig := .Site.Params.garden | default dict -}}
+{{- $gardenURL := .Site.BaseURL | default "/" -}}
+{{- if not (strings.HasSuffix $gardenURL "/") -}}
+  {{- $gardenURL = printf "%s/" $gardenURL -}}
+{{- end -}}
+{{- $gardenURL = printf "%sgarden" $gardenURL -}}
+
+<div class="garden-callout">
+  <p>
+    {{ $gardenConfig.calloutText | default "This is an entry in my digital garden." }}
+    <a href="{{ $gardenURL }}">{{ $gardenConfig.calloutLinkText | default "See what else is growing here." }}</a>
+  </p>
+</div>

@@ -1,0 +1,391 @@
+/* Hugo Garden Module Styles */
+/* Use CSS variables for easy customization */
+
+:root {
+    /* Default color palette - can be overridden in hugo.toml params.garden.colors */
+    --garden-color-seed: rgba(145, 219, 105, 1);
+    --garden-color-sprout: rgba(72, 187, 120, 1);
+    --garden-color-rhizome: rgba(47, 133, 90, 1);
+
+    /* Derived colors with transparency */
+    --garden-seed-bg: rgba(145, 219, 105, 0.05);
+    --garden-seed-border: rgba(145, 219, 105, 0.8);
+    --garden-seed-badge-bg: rgba(145, 219, 105, 0.1);
+    --garden-seed-badge-border: rgba(145, 219, 105, 0.3);
+    --garden-seed-badge-hover-bg: rgba(145, 219, 105, 0.15);
+    --garden-seed-badge-hover-border: rgba(145, 219, 105, 0.4);
+
+    --garden-sprout-bg: rgba(72, 187, 120, 0.05);
+    --garden-sprout-border: rgba(72, 187, 120, 0.8);
+    --garden-sprout-badge-bg: rgba(72, 187, 120, 0.1);
+    --garden-sprout-badge-border: rgba(72, 187, 120, 0.3);
+    --garden-sprout-badge-hover-bg: rgba(72, 187, 120, 0.15);
+    --garden-sprout-badge-hover-border: rgba(72, 187, 120, 0.4);
+    --garden-sprout-link: rgba(72, 187, 120, 0.9);
+
+    --garden-rhizome-bg: rgba(47, 133, 90, 0.05);
+    --garden-rhizome-border: rgba(47, 133, 90, 0.8);
+    --garden-rhizome-badge-bg: rgba(47, 133, 90, 0.1);
+    --garden-rhizome-badge-border: rgba(47, 133, 90, 0.3);
+    --garden-rhizome-badge-hover-bg: rgba(47, 133, 90, 0.15);
+    --garden-rhizome-badge-hover-border: rgba(47, 133, 90, 0.4);
+}
+
+/* ===== GARDEN ARCHIVE (List Page) ===== */
+
+.garden-archive {
+    max-width: 1200px;
+    margin: 0 auto;
+    font-size: 16px;
+    line-height: 1.6;
+    padding: 2rem 1rem;
+}
+
+.garden-intro {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border-left: 4px solid var(--garden-sprout-border);
+}
+
+/* ===== BROWSING INTERFACE ===== */
+
+.garden-browse {
+    margin: 2.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.browse-section {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(72, 187, 120, 0.15);
+}
+
+.browse-section:last-child {
+    border-bottom: none;
+}
+
+.browse-heading {
+    margin: 0 0 1rem 0;
+    font-size: 1.6rem;
+    color: var(--garden-sprout-link);
+    font-weight: 500;
+}
+
+.browse-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.browse-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.8rem;
+    border-radius: 20px;
+    text-decoration: none;
+    color: inherit;
+    font-size: 1.5rem;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.browse-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Growth badge specific styles */
+.growth-badge.seed {
+    background: var(--garden-seed-badge-bg);
+    border-color: var(--garden-seed-badge-border);
+}
+
+.growth-badge.seed:hover {
+    background: var(--garden-seed-badge-hover-bg);
+    border-color: var(--garden-seed-badge-hover-border);
+}
+
+.growth-badge.sprout {
+    background: var(--garden-sprout-badge-bg);
+    border-color: var(--garden-sprout-badge-border);
+}
+
+.growth-badge.sprout:hover {
+    background: var(--garden-sprout-badge-hover-bg);
+    border-color: var(--garden-sprout-badge-hover-border);
+}
+
+.growth-badge.rhizome {
+    background: var(--garden-rhizome-badge-bg);
+    border-color: var(--garden-rhizome-badge-border);
+}
+
+.growth-badge.rhizome:hover {
+    background: var(--garden-rhizome-badge-hover-bg);
+    border-color: var(--garden-rhizome-badge-hover-border);
+}
+
+/* Tag badge specific styles */
+.tag-badge:hover {
+    background: var(--garden-sprout-badge-bg);
+    border-color: var(--garden-sprout-badge-border);
+}
+
+/* Badge count indicator */
+.badge-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.5rem;
+    font-size: 0.75rem;
+    opacity: 0.7;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    padding: 0 0.35rem;
+}
+
+/* ===== GROWTH SECTIONS ===== */
+
+.growth-section {
+    margin: 3rem 0;
+    scroll-margin-top: 2rem;
+}
+
+.growth-heading {
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(72, 187, 120, 0.2);
+}
+
+.entries-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.garden-entry {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    animation: growEntry 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    animation-fill-mode: both;
+    border-left: 4px solid transparent;
+}
+
+.entry-link-wrapper {
+    display: block;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+}
+
+.garden-entry.seed {
+    border-left-color: var(--garden-seed-border);
+    background: var(--garden-seed-bg);
+}
+
+.garden-entry.sprout {
+    border-left-color: var(--garden-sprout-border);
+    background: var(--garden-sprout-bg);
+}
+
+.garden-entry.rhizome {
+    border-left-color: var(--garden-rhizome-border);
+    background: var(--garden-rhizome-bg);
+}
+
+.garden-entry:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Animation keyframes */
+@keyframes growEntry {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Stagger animations */
+.garden-entry:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.garden-entry:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.garden-entry:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+.entry-header {
+    margin-bottom: 1rem;
+}
+
+.entry-title {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 500;
+}
+
+.entry-metadata {
+    font-size: 1.4rem;
+}
+
+.timestamps {
+    margin-bottom: 0.75rem;
+    opacity: 0.8;
+}
+
+.timestamps time {
+    display: block;
+    margin-top: 0.25rem;
+}
+
+.entry-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    color: inherit;
+    font-size: 0.75rem;
+}
+
+.tag::before {
+    content: '#';
+    opacity: 0.7;
+    margin-right: 2px;
+}
+
+/* ===== SINGLE POST STYLES ===== */
+
+.garden-post {
+    position: relative;
+}
+
+.garden-state-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid;
+}
+
+/* State-specific styling */
+.garden-state-indicator:has(.seed) {
+    border-left-color: var(--garden-seed-border);
+    background: var(--garden-seed-bg);
+}
+
+.garden-state-indicator:has(.sprout) {
+    border-left-color: var(--garden-sprout-border);
+    background: var(--garden-sprout-bg);
+}
+
+.garden-state-indicator:has(.rhizome) {
+    border-left-color: var(--garden-rhizome-border);
+    background: var(--garden-rhizome-bg);
+}
+
+.state-icon {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.state-label {
+    text-transform: capitalize;
+    font-weight: 500;
+    margin-right: 1rem;
+}
+
+.state-dates {
+    display: flex;
+    gap: 3rem;
+    margin-left: auto;
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+/* Garden Callout Styles */
+.garden-callout {
+    margin: 3rem 0 1.5rem 0;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border-left: 4px solid var(--garden-sprout-border);
+    font-style: italic;
+    text-align: center;
+}
+
+.garden-callout a {
+    color: var(--garden-sprout-link);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.garden-callout a:hover {
+    text-decoration: underline;
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+
+@media (max-width: 768px) {
+    .entries-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .garden-browse {
+        gap: 1rem;
+    }
+
+    .browse-section {
+        padding-bottom: 1rem;
+    }
+
+    .browse-items {
+        gap: 0.5rem;
+    }
+
+    .browse-badge {
+        padding: 0.25rem 0.6rem;
+    }
+
+    .garden-state-indicator {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .state-dates {
+        margin-left: 0;
+        flex-direction: column;
+        gap: 0.25rem;
+        margin-top: 0.5rem;
+    }
+}

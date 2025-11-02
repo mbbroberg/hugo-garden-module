@@ -1,0 +1,145 @@
+{{ define "main" }}
+{{- $gardenConfig := .Site.Params.garden | default dict -}}
+{{- $growthStages := $gardenConfig.growthStages | default (slice "seed" "sprout" "rhizome") -}}
+{{- $emojis := $gardenConfig.emojis | default (dict "seed" "🌱" "sprout" "🌿" "rhizome" "🫚") -}}
+{{- $labels := $gardenConfig.labels | default (dict "seed" "seed" "sprout" "sprout" "rhizome" "rhizome") -}}
+{{- $colors := $gardenConfig.colors | default (dict "seed" "rgba(145, 219, 105, 1)" "sprout" "rgba(72, 187, 120, 1)" "rhizome" "rgba(47, 133, 90, 1)") -}}
+
+<div class="garden-archive">
+    {{ with .Content }}
+    <div class="garden-intro">
+        {{ . | markdownify }}
+    </div>
+    {{ end }}
+
+    <!-- Unified browsing interface -->
+    <section class="garden-browse">
+        <div class="browse-section">
+            <h3 class="browse-heading">Browse by growth stage</h3>
+
+            <div class="browse-items">
+                {{ $pages := where .Site.RegularPages "Type" "garden" }}
+
+                {{ $stateCount := dict }}
+                {{ range $state := $growthStages }}
+                    {{ $count := 0 }}
+                    {{ range $pages }}
+                        {{ if eq .Params.state $state }}
+                            {{ $count = add $count 1 }}
+                        {{ end }}
+                    {{ end }}
+                    {{ $stateCount = merge $stateCount (dict $state $count) }}
+                {{ end }}
+
+                {{ range $growthStages }}
+                <a href="#{{ . }}" class="browse-badge growth-badge {{ . }}">
+                    {{ index $emojis . }}
+                    {{ index $labels . }}
+                    <span class="badge-count">{{ index $stateCount . }}</span>
+                </a>
+                {{ end }}
+            </div>
+        </div>
+
+        <div class="browse-section">
+            <h3 class="browse-heading">Browse by topic</h3>
+
+            <div class="browse-items">
+                {{ $pages := where .Site.RegularPages "Section" "garden" }}
+                {{ $allTags := slice }}
+                {{ range $pages }}
+                    {{ range .Params.tags }}
+                        {{ $allTags = $allTags | append . }}
+                    {{ end }}
+                {{ end }}
+                {{ $uniqueTags := uniq $allTags }}
+
+                {{ $tagCount := dict }}
+                {{ range $tag := $uniqueTags }}
+                    {{ $count := 0 }}
+                    {{ range $pages }}
+                        {{ if in .Params.tags $tag }}
+                            {{ $count = add $count 1 }}
+                        {{ end }}
+                    {{ end }}
+                    {{ $tagCount = merge $tagCount (dict $tag $count) }}
+                {{ end }}
+
+                {{ range $tag, $count := $tagCount }}
+                <a href="{{ $.Site.BaseURL }}tags/{{ $tag | urlize }}/" class="browse-badge tag-badge" data-count="{{ $count }}">
+                    #{{ $tag }}
+                    <span class="badge-count">{{ $count }}</span>
+                </a>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+
+    <!-- Content sections by growth state, ordered by maturity -->
+    {{ range $growthStages }}
+    {{ $state := . }}
+    <section id="{{ $state }}" class="growth-section">
+        <h2 class="growth-heading">
+            {{ index $emojis $state }}
+            {{ if eq $state "seed" }}
+                New Growth
+            {{ else if eq $state "sprout" }}
+                Sprouting Connections
+            {{ else if eq $state "rhizome" }}
+                Enmeshed and Interwoven
+            {{ else }}
+                {{ index $labels $state | title }}
+            {{ end }}
+        </h2>
+        <div class="entries-grid">
+            {{ range where $.Site.RegularPages "Type" "garden" }}
+                {{ if eq .Params.state $state }}
+                <article class="garden-entry {{ $state }}">
+                    <a href="{{ .RelPermalink }}" class="entry-link-wrapper">
+                        <div class="entry-header">
+                            <h3 class="entry-title">{{ .Title }}</h3>
+                        </div>
+                        <div class="entry-metadata">
+                            <div class="timestamps">
+                                {{ if .Params.updated }}
+                                    {{ $dateStr := .Params.updated }}
+                                    {{ $dateParts := split $dateStr " " }}
+                                    {{ if ge (len $dateParts) 2 }}
+                                        {{ $justDate := index $dateParts 0 }}
+                                        <time class="tended">Last tended: {{ dateFormat "January 2, 2006" $justDate }}</time>
+                                    {{ end }}
+                                {{ end }}
+                            </div>
+                            {{ with .Params.tags }}
+                            <div class="entry-tags">
+                                {{ range . }}
+                                <span class="tag">{{ . }}</span>
+                                {{ end }}
+                            </div>
+                            {{ end }}
+                        </div>
+                    </a>
+                </article>
+                {{ end }}
+            {{ end }}
+        </div>
+    </section>
+    {{ end }}
+</div>
+
+{{/* Inject CSS variables for dynamic theming */}}
+<style>
+    :root {
+        {{ range $state, $color := $colors }}
+        --garden-color-{{ $state }}: {{ $color }};
+        {{ end }}
+    }
+</style>
+
+{{/* Load main garden styles */}}
+{{ $gardenCSS := resources.Get "css/garden.css" }}
+{{ if $gardenCSS }}
+    {{ $gardenCSS = $gardenCSS | minify }}
+    <link rel="stylesheet" href="{{ $gardenCSS.RelPermalink }}">
+{{ end }}
+{{ end }}
