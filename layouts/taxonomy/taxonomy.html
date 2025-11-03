@@ -1,0 +1,158 @@
+{{ define "main" }}
+<div class="taxonomy-list">
+    <header class="taxonomy-header">
+        <h1>{{ .Title }}</h1>
+        {{ if .Params.description }}
+        <p class="taxonomy-description">{{ .Params.description }}</p>
+        {{ else }}
+        <p class="taxonomy-description">Browse all {{ .Data.Plural | lower }}</p>
+        {{ end }}
+        <div class="taxonomy-meta">
+            <span class="term-count">{{ len .Data.Terms }} {{ .Data.Plural | lower }}</span>
+        </div>
+    </header>
+
+    <div class="taxonomy-grid">
+        {{ range .Data.Terms.Alphabetical }}
+        <a href="{{ .Page.RelPermalink }}" class="taxonomy-card">
+            <div class="card-header">
+                <h3>{{ .Page.Title }}</h3>
+                <span class="entry-count">{{ .Count }}</span>
+            </div>
+            {{ with .Page.Params.description }}
+            <p class="card-description">{{ . }}</p>
+            {{ end }}
+            <div class="card-footer">
+                <span class="view-all">View {{ if eq .Count 1 }}entry{{ else }}all {{ .Count }} entries{{ end }} →</span>
+            </div>
+        </a>
+        {{ end }}
+    </div>
+</div>
+
+<style>
+    .taxonomy-list {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    .taxonomy-header {
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid rgba(72, 187, 120, 0.2);
+    }
+
+    .taxonomy-header h1 {
+        margin: 0 0 1rem 0;
+        font-size: 2.5rem;
+        color: rgba(72, 187, 120, 0.9);
+    }
+
+    .taxonomy-description {
+        margin: 0 0 1rem 0;
+        font-size: 1.2rem;
+        opacity: 0.8;
+    }
+
+    .taxonomy-meta {
+        font-size: 1rem;
+        opacity: 0.6;
+    }
+
+    .term-count {
+        font-weight: 500;
+    }
+
+    .taxonomy-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .taxonomy-card {
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 8px;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.25s ease;
+        min-height: 120px;
+    }
+
+    .taxonomy-card:hover {
+        background: rgba(72, 187, 120, 0.08);
+        border-color: rgba(72, 187, 120, 0.3);
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .card-header h3 {
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 600;
+        flex: 1;
+        word-break: break-word;
+    }
+
+    .entry-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 2rem;
+        height: 2rem;
+        padding: 0 0.5rem;
+        background: rgba(72, 187, 120, 0.15);
+        border: 1px solid rgba(72, 187, 120, 0.3);
+        border-radius: 12px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        flex-shrink: 0;
+    }
+
+    .card-description {
+        margin: 0 0 auto 0;
+        opacity: 0.7;
+        line-height: 1.5;
+        font-size: 0.95rem;
+    }
+
+    .card-footer {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .view-all {
+        font-size: 0.9rem;
+        opacity: 0.6;
+        font-weight: 500;
+    }
+
+    .taxonomy-card:hover .view-all {
+        opacity: 1;
+        color: rgba(72, 187, 120, 0.9);
+    }
+
+    @media (max-width: 768px) {
+        .taxonomy-header h1 {
+            font-size: 2rem;
+        }
+
+        .taxonomy-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{{ end }}

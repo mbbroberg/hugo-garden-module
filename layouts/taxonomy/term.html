@@ -1,0 +1,229 @@
+{{ define "main" }}
+<div class="taxonomy-term">
+    <header class="taxonomy-header">
+        <h1>{{ .Title }}</h1>
+        {{ if .Params.description }}
+        <p class="taxonomy-description">{{ .Params.description }}</p>
+        {{ else }}
+        <p class="taxonomy-description">
+            {{ .Data.Plural | humanize }} tagged with "{{ .Title }}"
+        </p>
+        {{ end }}
+        <div class="taxonomy-meta">
+            <span class="entry-count">{{ len .Pages }} {{ if eq (len .Pages) 1 }}entry{{ else }}entries{{ end }}</span>
+        </div>
+    </header>
+
+    <div class="taxonomy-entries">
+        {{ range .Pages.GroupByDate "2006" }}
+        <section class="year-group">
+            <h2 class="year-heading">{{ .Key }}</h2>
+            <div class="entries-list">
+                {{ range .Pages }}
+                <article class="taxonomy-entry">
+                    <div class="entry-header">
+                        <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+                        {{ if isset .Params "state" }}
+                        <span class="growth-indicator {{ .Params.state }}">
+                            {{ if eq .Params.state "seed" }}🌱{{ else if eq .Params.state "sprout" }}🌿{{ else if eq .Params.state "rhizome" }}🫚{{ end }}
+                            {{ .Params.state }}
+                        </span>
+                        {{ end }}
+                    </div>
+                    {{ with .Summary }}
+                    <p class="entry-summary">{{ . | plainify | truncate 200 }}</p>
+                    {{ end }}
+                    <div class="entry-meta">
+                        {{ if .Date }}
+                        <time datetime="{{ .Date.Format "2006-01-02" }}">
+                            {{ .Date.Format "Jan 2, 2006" }}
+                        </time>
+                        {{ end }}
+                        {{ with .Params.tags }}
+                        <div class="entry-tags">
+                            {{ range first 3 . }}
+                            <span class="tag">#{{ . }}</span>
+                            {{ end }}
+                        </div>
+                        {{ end }}
+                    </div>
+                </article>
+                {{ end }}
+            </div>
+        </section>
+        {{ end }}
+    </div>
+</div>
+
+<style>
+    .taxonomy-term {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    .taxonomy-header {
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid rgba(72, 187, 120, 0.2);
+    }
+
+    .taxonomy-header h1 {
+        margin: 0 0 1rem 0;
+        font-size: 2.5rem;
+        color: rgba(72, 187, 120, 0.9);
+    }
+
+    .taxonomy-description {
+        margin: 0 0 1rem 0;
+        font-size: 1.2rem;
+        opacity: 0.8;
+    }
+
+    .taxonomy-meta {
+        font-size: 1rem;
+        opacity: 0.6;
+    }
+
+    .entry-count {
+        font-weight: 500;
+    }
+
+    .year-group {
+        margin-bottom: 3rem;
+    }
+
+    .year-heading {
+        margin: 0 0 1.5rem 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(72, 187, 120, 0.15);
+        font-size: 1.8rem;
+        opacity: 0.7;
+    }
+
+    .entries-list {
+        display: grid;
+        gap: 1.5rem;
+    }
+
+    .taxonomy-entry {
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 8px;
+        border-left: 3px solid rgba(72, 187, 120, 0.3);
+        transition: all 0.25s ease;
+    }
+
+    .taxonomy-entry:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-left-color: rgba(72, 187, 120, 0.6);
+        transform: translateX(4px);
+    }
+
+    .entry-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .entry-header h3 {
+        margin: 0;
+        font-size: 1.5rem;
+        flex: 1;
+    }
+
+    .entry-header h3 a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .entry-header h3 a:hover {
+        color: rgba(72, 187, 120, 0.9);
+    }
+
+    .growth-indicator {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.25rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .growth-indicator.seed {
+        background: rgba(145, 219, 105, 0.15);
+        border: 1px solid rgba(145, 219, 105, 0.3);
+    }
+
+    .growth-indicator.sprout {
+        background: rgba(72, 187, 120, 0.15);
+        border: 1px solid rgba(72, 187, 120, 0.3);
+    }
+
+    .growth-indicator.rhizome {
+        background: rgba(47, 133, 90, 0.15);
+        border: 1px solid rgba(47, 133, 90, 0.3);
+    }
+
+    .entry-summary {
+        margin: 0 0 1rem 0;
+        line-height: 1.6;
+        opacity: 0.8;
+    }
+
+    .entry-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        font-size: 0.95rem;
+        opacity: 0.6;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .entry-meta time {
+        white-space: nowrap;
+    }
+
+    .entry-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+    }
+
+    .tag {
+        padding: 0.2rem 0.5rem;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 8px;
+        font-size: 0.85rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @media (max-width: 768px) {
+        .taxonomy-header h1 {
+            font-size: 2rem;
+        }
+
+        .year-heading {
+            font-size: 1.5rem;
+        }
+
+        .entry-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .entry-meta {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+    }
+</style>
+{{ end }}
