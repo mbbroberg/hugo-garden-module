@@ -23,17 +23,20 @@ The example site is already configured with a `go.mod` that has a `replace` dire
 ## Guidelines
 
 ### Code Style
+
 - Use semantic HTML
 - Follow existing CSS patterns and variable naming
 - Keep JavaScript minimal and dependency-free
 - Comment complex template logic
 
 ### Commit Messages
+
 - Use clear, descriptive commit messages
 - Start with a verb (Add, Fix, Update, Remove)
 - Reference issues when applicable
 
 ### Pull Requests
+
 - Create a branch for your feature/fix
 - Update documentation if needed
 - Test with the example site

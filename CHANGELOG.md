@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2025-11-01
 
 ### Added
+
 - Initial release of Hugo Garden Module
 - Garden list layout with browsing interface
 - Browse by growth stage (seed, sprout, rhizome)
@@ -29,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - MIT License
 
 ### Features
+
 - Three default growth stages with customization support
 - Tag-based organization and browsing
 - Date tracking (planted and last tended)
